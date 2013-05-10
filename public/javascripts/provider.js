@@ -3,7 +3,7 @@ var DragAndDrop = (function () {
   var module = {};
 
   var container_e = $('<div id="drop_container"></div>');
-  var drop_e = $('<div id="drop">Drop file here.</div>');
+  var drop_e = $('<div id="drop"><p>Drop a file here.</p></div>');
   var list_e = $('<div id="list"></div>');
 
   var error_container = $('<div id="error"></div>');

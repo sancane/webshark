@@ -1,7 +1,21 @@
 #drop {
   min-height: 150px;
   width: 250px;
-  border: 1px solid grey;
   margin: 10px;
   padding: 10px;
+  -webkit-border-radius: 18px;
+  -moz-border-radius: 18px;
+  border-radius: 18px;
+  border:2px solid #314B78;
+  background-color:#4468A6;
+  -webkit-box-shadow: #B3B3B3 3px 3px 3px;
+  -moz-box-shadow: #B3B3B3 3px 3px 3px;
+  box-shadow: #B3B3B3 3px 3px 3px;
+}
+
+#drop p {
+  color:white;
+  text-align: center;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 25px;
 }
