@@ -70,11 +70,11 @@ var DragAndDrop = (function () {
     if(window.FileReader) {
       reader = new FileReader();
       addHandlers();
-      container_e.append(drop_e);
+      container_e.html(drop_e);
       container_e.append(list_e);
     } else {
       error_container.append(error_e);
-      container_e.append(error_container);
+      container_e.html(error_container);
     }
 
     render(container_e);
