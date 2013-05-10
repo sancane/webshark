@@ -29,11 +29,24 @@ var Webshark = (function () {
 
   var module = {};
 
+  var container = null;
+  var supplier = $('<div id="content_supplier"></div>');
+  var whireshark = $('<div id="whireshark_view">B</div>');
+
   function renderHTML(container) {
-    $("#content_supplier").html(container);
+    supplier.html(container);
+  }
+
+  function packContainers(id) {
+    container = $("#" + id);
+    container.html(supplier);
+    container.append(whireshark);
   }
 
   module.Analyzer = function(obj) {
+    if (obj.container)
+      packContainers(obj.container);
+
     if (obj.render)
       obj.render(renderHTML);
   }
