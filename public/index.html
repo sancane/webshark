@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="./css/draganddrop.css" rel="stylesheet" type="text/css">
     <script src="./javascripts/jquery-1.9.1.js"></script>
+    <script src="./javascripts/webshark.js"></script>
+    <script src="./javascripts/provider.js"></script>
   </head>
   <body>
-    <p id="someElement"></p>
-    <p id="anotherElement"></p>
-    <script>
-      var xml = "<rss version='2.0'><channel><title>RSS Title</title></channel></rss>",
-      xmlDoc = $.parseXML( xml ),
-      $xml = $( xmlDoc ),
-      $title = $xml.find( "title" );
-      /* append "RSS Title" to #someElement */
-      $( "#someElement" ).append( $title.text() );
-      /* change the title to "XML Title" */
-      $title.text( "XML Title" );
-      /* append "XML Title" to #anotherElement */
-      $( "#anotherElement" ).append( $title.text() );
-    </script>
+
+  <div id="content_supplier">
+  </div>
+
+  <script>
+    $(window).load( function() {
+      var wireshark = new Webshark.Analyzer({
+        render: DragAndDrop.html
+      });
+    });
+  </script>
   </body>
 </html>
