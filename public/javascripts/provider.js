@@ -58,7 +58,7 @@ var DragAndDrop = (function () {
     });
 
     reader.onloadstart = function(e) {
-      console.log("Load start");
+      bar_e.fadeIn();
     };
 
     reader.onprogress = function(e) {
@@ -78,7 +78,7 @@ var DragAndDrop = (function () {
     };
 
     reader.onloadend = function(e) {
-      console.log("Load end");
+      bar_e.fadeOut();
     };
   }
 
@@ -91,6 +91,8 @@ var DragAndDrop = (function () {
       container_e.append(list_e);
       bar_e.html(progress_e);
       container_e.append(bar_e);
+      list_e.hide();
+      bar_e.hide();
     } else {
       error_container.append(error_e);
       container_e.html(error_container);
