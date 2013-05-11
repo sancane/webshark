@@ -12,6 +12,11 @@ var DragAndDrop = (function () {
   // The file reader is FileReader is supported
   var reader = null;
 
+  function addCSS() {
+    var css_e = $('<link rel="stylesheet" href="./css/draganddrop.css" type="text/css" />');
+    $('head').append(css_e);
+  }
+
   function preventDefaultPropagation(e) {
     var evt = e || window.event;
     evt.preventDefault();
@@ -70,6 +75,7 @@ var DragAndDrop = (function () {
     if(window.FileReader) {
       reader = new FileReader();
       addHandlers();
+      addCSS();
       container_e.html(drop_e);
       container_e.append(list_e);
     } else {
