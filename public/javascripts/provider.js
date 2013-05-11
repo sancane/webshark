@@ -65,6 +65,7 @@ var DragAndDrop = (function () {
     });
 
     reader.onloadstart = function(e) {
+      bar_e.stop();
       bar_e.fadeIn();
       list_e.hide();
     };
