@@ -1,4 +1,4 @@
-#drop {
+#drop_container {
   min-height: 150px;
   width: 250px;
   margin: 10px;
@@ -18,4 +18,32 @@
   text-align: center;
   font-family: arial, helvetica, sans-serif;
   font-size: 25px;
+}
+
+#bar {
+margin-left:auto;
+  margin-right:auto;
+  width:70%;
+}
+
+#bar progress {
+  border-radius: 9px;
+  background-color: white;
+}
+
+#bar progress::-webkit-progress-bar {
+  padding: 2px;
+  border-radius: 9px;
+  background-color: white;
+}
+
+#bar progress::-webkit-progress-value {
+  border-radius: 9px;
+  background-color: #728E9F;
+}
+
+#bar progress::-moz-progress-bar {
+  padding: 2px;
+  border-radius: 9px;
+  background-color: #728E9F;
 }
