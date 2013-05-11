@@ -60,15 +60,23 @@ var DragAndDrop = (function () {
     reader.onloadstart = function(e) {
       console.log("Load start");
     };
+
     reader.onprogress = function(e) {
-      console.log("Progress");
+      if (!e.lengthComputable)
+        return;
+
+      var percentLoaded = Math.round((e.loaded / e.total) * 100);
+      progress_e.val(percentLoaded);
     };
+
     reader.onerror = function(e) {
       console.log("error");
     };
+
     reader.onload = function(e) {
       console.log("Load");
     };
+
     reader.onloadend = function(e) {
       console.log("Load end");
     };
