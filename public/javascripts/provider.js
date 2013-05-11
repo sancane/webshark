@@ -3,7 +3,7 @@ var DragAndDrop = (function () {
   var module = {};
 
   var container_e = $('<div id="drop_container"></div>');
-  var drop_e = $('<div id="drop"><p>Drop a file here.</p></div>');
+  var drop_e = $('<div id="drop"><p>Drop a file here!</p></div>');
   var list_e = $('<div id="list"></div>');
   var bar_e = $('<div id="bar"></div>');
 
@@ -14,6 +14,7 @@ var DragAndDrop = (function () {
 
   // variable reader will be a FileReader if it is supported
   var reader = null;
+  var fileName = null;
 
   function addCSS() {
     var css_e = $('<link rel="stylesheet" href="./css/draganddrop.css" type="text/css" />');
@@ -52,6 +53,8 @@ var DragAndDrop = (function () {
         if (files.length <= 0)
           return false;
 
+        fileName = files[0].name;
+
         reader.readAsText(files[0]);
         return false;
       }
@@ -59,6 +62,7 @@ var DragAndDrop = (function () {
 
     reader.onloadstart = function(e) {
       bar_e.fadeIn();
+      list_e.hide();
     };
 
     reader.onprogress = function(e) {
@@ -70,15 +74,19 @@ var DragAndDrop = (function () {
     };
 
     reader.onerror = function(e) {
-      console.log("error");
+      // Error
+      list_e.html('<p>Error loading ' + fileName + '</p');
     };
 
     reader.onload = function(e) {
-      console.log("Load");
+      // Read was success
+      list_e.html('<p>File: ' + fileName + '</p');
     };
 
     reader.onloadend = function(e) {
-      bar_e.fadeOut();
+      bar_e.fadeOut(function() {
+        list_e.show();
+      });
     };
   }
 
