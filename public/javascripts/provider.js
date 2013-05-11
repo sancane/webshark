@@ -5,9 +5,12 @@ var DragAndDrop = (function () {
   var container_e = $('<div id="drop_container"></div>');
   var drop_e = $('<div id="drop"><p>Drop a file here.</p></div>');
   var list_e = $('<div id="list"></div>');
+  var bar_e = $('<div id="bar"></div>');
 
   var error_container = $('<div id="error"></div>');
   var error_e = $('<p>Your browser does not support the HTML5 FileReader.</p>');
+
+  var progress_e = $('<progress value="0" max="100"></progress>');
 
   // The file reader is FileReader is supported
   var reader = null;
@@ -26,7 +29,7 @@ var DragAndDrop = (function () {
   }
 
   function addHandlers() {
-    drop_e.bind({
+    container_e.bind({
       dragover: function(e) {
         preventDefaultPropagation(e);
         return false;
@@ -78,6 +81,8 @@ var DragAndDrop = (function () {
       addCSS();
       container_e.html(drop_e);
       container_e.append(list_e);
+      bar_e.html(progress_e);
+      container_e.append(bar_e);
     } else {
       error_container.append(error_e);
       container_e.html(error_container);
