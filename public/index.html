@@ -4,20 +4,12 @@
     <script src="./javascripts/jquery-1.9.1.js"></script>
     <script src="./javascripts/webshark.js"></script>
     <script src="./javascripts/provider.js"></script>
+    <script src="./javascripts/main.js"></script>
   </head>
   <body>
 
-  <!-- Whireshark container -->
-  <div id="whireshark"></div>
+    <!-- Whireshark container -->
+    <div id="whireshark"></div>
 
-  <script>
-    $(window).load( function() {
-      var wireshark = new Webshark.Analyzer({
-        container: "whireshark",
-        configure: DragAndDrop.configure,
-        render: DragAndDrop.html
-      });
-    });
-  </script>
   </body>
 </html>
