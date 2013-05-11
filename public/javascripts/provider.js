@@ -75,12 +75,12 @@ var DragAndDrop = (function () {
 
     reader.onerror = function(e) {
       // Error
-      list_e.html('<p>Error loading ' + fileName + '</p');
+      list_e.html('<p class="error">Error loading ' + fileName + '</p');
     };
 
     reader.onload = function(e) {
       // Read was success
-      list_e.html('<p>File: ' + fileName + '</p');
+      list_e.html('<p class="success" >' + fileName + '</p');
     };
 
     reader.onloadend = function(e) {
