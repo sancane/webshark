@@ -38,7 +38,11 @@ var Webshark = (function () {
   }
 
   function loadFile(content) {
-    alert(content);
+     var xmlDoc = $.parseXML(content);
+     var $xml = $(xmlDoc);
+     $xml.find("proto").each(function() {
+       console.log($(this).attr("name"));
+     });
   }
 
   function packContainers(id) {
