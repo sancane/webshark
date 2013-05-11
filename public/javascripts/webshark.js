@@ -29,29 +29,34 @@ var Webshark = (function () {
 
   var module = {};
 
-  var container = null;
-  var supplier = $('<div id="content_supplier"></div>');
-  var whireshark = $('<div id="whireshark_view">B</div>');
-
-  function renderHTML(container) {
-    supplier.html(container);
-  }
-
-  function loadFile(content) {
-     var xmlDoc = $.parseXML(content);
-     var $xml = $(xmlDoc);
-     $xml.find("proto").each(function() {
-       console.log($(this).attr("name"));
-     });
-  }
-
-  function packContainers(id) {
-    container = $("#" + id);
-    container.html(supplier);
-    container.append(whireshark);
-  }
-
+  /**
+   * Whireshark analyzer object
+   */
   module.Analyzer = function(obj) {
+    var that = {};
+
+    var container = null;
+    var supplier = $('<div id="content_supplier"></div>');
+    var whireshark = $('<div id="whireshark_view">B</div>');
+
+    function renderHTML(container) {
+      supplier.html(container);
+    }
+
+    function loadFile(content) {
+      var xmlDoc = $.parseXML(content);
+       var $xml = $(xmlDoc);
+       $xml.find("proto").each(function() {
+         console.log($(this).attr("name"));
+       });
+    }
+
+    function packContainers(id) {
+      container = $("#" + id);
+      container.html(supplier);
+      container.append(whireshark);
+    }
+
     if (obj.container)
       packContainers(obj.container);
 
@@ -63,6 +68,8 @@ var Webshark = (function () {
 
     if (obj.render)
       obj.render(renderHTML);
+
+    return that;
   }
 
   return module;
