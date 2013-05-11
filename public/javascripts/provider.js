@@ -12,7 +12,7 @@ var DragAndDrop = (function () {
 
   var progress_e = $('<progress value="0" max="100"></progress>');
 
-  // The file reader is FileReader is supported
+  // variable reader will be a FileReader if it is supported
   var reader = null;
 
   function addCSS() {
