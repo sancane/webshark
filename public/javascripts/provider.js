@@ -2,7 +2,7 @@ var DragAndDrop = (function () {
   
   var module = {};
 
-  var container_e = $('<div id="drop_container"></div>');
+  var container_e = $('<div id="drop_container" class="leave"></div>');
   var drop_e = $('<div id="drop"><p>Drop a file here!</p></div>');
   var list_e = $('<div id="list"></div>');
   var bar_e = $('<div id="bar"></div>');
@@ -32,18 +32,22 @@ var DragAndDrop = (function () {
   function addHandlers() {
     container_e.bind({
       dragover: function(e) {
+        container_e.attr('class', 'over');
         preventDefaultPropagation(e);
         return false;
       },
-      dragend: function(e) {
-        //$(this).removeClass('hover');
-        //return false;
-      },
       dragenter: function(e) {
+        container_e.attr('class', 'over');
+        preventDefaultPropagation(e);
+        return false;
+      },
+      dragleave: function(e) {
+        container_e.attr('class', 'leave');
         preventDefaultPropagation(e);
         return false;
       },
       drop: function(e) {
+        container_e.attr('class', 'leave');
         var evt = preventDefaultPropagation(e);
 
         // jQuery wraps the originalEvent, so we try to detect that here.

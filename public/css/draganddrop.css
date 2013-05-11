@@ -6,11 +6,19 @@
   -webkit-border-radius: 18px;
   -moz-border-radius: 18px;
   border-radius: 18px;
-  border:2px solid #314B78;
-  background-color:#4468A6;
   -webkit-box-shadow: #B3B3B3 3px 3px 3px;
   -moz-box-shadow: #B3B3B3 3px 3px 3px;
   box-shadow: #B3B3B3 3px 3px 3px;
+}
+
+#drop_container.over {
+  background-color:#98A8C4;
+  border:2px solid #777E8A;
+}
+
+#drop_container.leave {
+  background-color:#4468A6;
+  border:2px solid #314B78;
 }
 
 #drop p {
