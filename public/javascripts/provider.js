@@ -15,6 +15,12 @@ var DragAndDrop = (function () {
   // variable reader will be a FileReader if it is supported
   var reader = null;
   var fileName = null;
+  var config = null;
+
+  function refreshXML(content) {
+    if (config.loadFile)
+      config.loadFile(content);
+  }
 
   function addCSS() {
     var css_e = $('<link rel="stylesheet" href="./css/draganddrop.css" type="text/css" />');
@@ -85,6 +91,7 @@ var DragAndDrop = (function () {
 
     reader.onload = function(e) {
       // Read was success
+      refreshXML(e.target.result);
       list_e.html('<p class="success" >' + fileName + '</p');
     };
 
@@ -95,7 +102,11 @@ var DragAndDrop = (function () {
     };
   }
 
-  module.html = function (render) {
+  module.configure = function (obj) {
+    config = obj;
+  }
+
+  module.html = function (render_cb) {
     if(window.FileReader) {
       reader = new FileReader();
       addHandlers();
@@ -111,7 +122,7 @@ var DragAndDrop = (function () {
       container_e.html(error_container);
     }
 
-    render(container_e);
+    render_cb(container_e);
   }
 
   return module;

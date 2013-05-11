@@ -37,6 +37,10 @@ var Webshark = (function () {
     supplier.html(container);
   }
 
+  function loadFile(content) {
+    alert(content);
+  }
+
   function packContainers(id) {
     container = $("#" + id);
     container.html(supplier);
@@ -46,6 +50,12 @@ var Webshark = (function () {
   module.Analyzer = function(obj) {
     if (obj.container)
       packContainers(obj.container);
+
+    if (obj.configure) {
+      obj.configure({
+        loadFile: loadFile
+      });
+    }
 
     if (obj.render)
       obj.render(renderHTML);
