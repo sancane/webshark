@@ -32,7 +32,7 @@
   height: 100%;
   width: 25%;
   background-image:url('./img/upload_arrow_up.png');
-  background-size:80px 80px;
+  background-size: 80px 80px;
   background-repeat:no-repeat;
   background-position:center; 
 }
@@ -40,7 +40,14 @@
 #rigth {
   float:right;
   height: 100%;
-  width: 75%;
+}
+
+#drop {
+  margin-top: 22%;
+}
+
+#drop p {
+  margin: 0px;
 }
 
 #drop p.main {
@@ -78,8 +85,8 @@
 }
 
 #list p.success {
-  background-color: #95969A;
-  color: white;
+  background-color: white;
+  color: #98A8C4;
 }
 
 #list p.error{
