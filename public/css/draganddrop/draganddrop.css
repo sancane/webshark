@@ -1,52 +1,85 @@
 #drop_container {
-  min-height: 150px;
+  height: 150px;
   width: 250px;
   margin: 10px;
   padding: 10px;
-  -webkit-border-radius: 18px;
-  -moz-border-radius: 18px;
-  border-radius: 18px;
+  border-style: dashed;
+  border-width: 2px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
   -webkit-box-shadow: #B3B3B3 3px 3px 3px;
   -moz-box-shadow: #B3B3B3 3px 3px 3px;
   box-shadow: #B3B3B3 3px 3px 3px;
 }
 
 #drop_container.over {
-  background-color:#98A8C4;
-  border:2px solid #777E8A;
+  background-color:#4468A6;
+  border-color: #314B78;
 }
 
 #drop_container.leave {
-  background-color:#4468A6;
-  border:2px solid #314B78;
+  background-color:#98A8C4;
+  border-color: #777E8A;
 }
 
-#drop p {
+#subcontainer {
+  height: 80%;
+}
+
+#left {
+  float:left;
+  height: 100%;
+  width: 25%;
+  background-image:url('./img/upload_arrow_up.png');
+  background-size:80px 80px;
+  background-repeat:no-repeat;
+  background-position:center; 
+}
+
+#rigth {
+  float:right;
+  height: 100%;
+  width: 75%;
+}
+
+#drop p.main {
   color:white;
   text-align: center;
   font-family: arial, helvetica, sans-serif;
   font-size: 25px;
 }
 
+#drop p.foot {
+  color:white;
+  text-align: center;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 12px;
+}
+
 #list {
-  min-height:40px;
-  background-color: #BFD5F5;
-  -webkit-border-radius: 18px;
-  -moz-border-radius: 18px;
-  border-radius: 18px;
+  height: 100%;
+  width:100%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#list p {
+  margin: 0px;
+  background-color: red;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
   border:2px solid white;
   margin-left:auto;
   margin-right:auto;
-  width:80%;
-  text-align: center;
-  vertical-align: middle;
   font-family: arial, helvetica, sans-serif;
   font-size: 18px;
 }
 
 #list p.success {
-  background-color: #BFD5F5;
-  color: #4468A6;
+  background-color: #95969A;
+  color: white;
 }
 
 #list p.error{

@@ -2,8 +2,15 @@ var DragAndDrop = (function () {
   
   var module = {};
 
-  var container_e = $('<div id="drop_container" class="leave"></div>');
-  var drop_e = $('<div id="drop"><p>Drop a file here!</p></div>');
+  var container = $('<div id="drop_container" class="leave"></div>');
+  var subcontainer = $('<div id="subcontainer"></div>');
+
+  var left = $('<div id="left"></div>');
+  var rigth = $('<div id="rigth"></div>');
+  var bottom = $('<div id="bottom">dede</div>');
+
+  var drop_e = $('<div id="drop"></div>');
+
   var list_e = $('<div id="list"></div>');
   var bar_e = $('<div id="bar"></div>');
 
@@ -23,7 +30,7 @@ var DragAndDrop = (function () {
   }
 
   function addCSS() {
-    var css_e = $('<link rel="stylesheet" href="./css/draganddrop.css" type="text/css" />');
+    var css_e = $('<link rel="stylesheet" href="./css/draganddrop/draganddrop.css" type="text/css" />');
     $('head').append(css_e);
   }
 
@@ -36,24 +43,24 @@ var DragAndDrop = (function () {
   }
 
   function addHandlers() {
-    container_e.bind({
+    container.bind({
       dragover: function(e) {
-        container_e.attr('class', 'over');
+        container.attr('class', 'over');
         preventDefaultPropagation(e);
         return false;
       },
       dragenter: function(e) {
-        container_e.attr('class', 'over');
+        container.attr('class', 'over');
         preventDefaultPropagation(e);
         return false;
       },
       dragleave: function(e) {
-        container_e.attr('class', 'leave');
+        container.attr('class', 'leave');
         preventDefaultPropagation(e);
         return false;
       },
       drop: function(e) {
-        container_e.attr('class', 'leave');
+        container.attr('class', 'leave');
         var evt = preventDefaultPropagation(e);
 
         // jQuery wraps the originalEvent, so we try to detect that here.
@@ -111,18 +118,24 @@ var DragAndDrop = (function () {
       reader = new FileReader();
       addHandlers();
       addCSS();
-      container_e.html(drop_e);
-      container_e.append(list_e);
+      drop_e.append('<p class="main">Drop a file here!</p>');
+      drop_e.append('<p class="foot">(clicking opens the file browser)</p>');
+      rigth.html(drop_e);
+      subcontainer.html(left);
+      subcontainer.append(rigth);
       bar_e.html(progress_e);
-      container_e.append(bar_e);
+      bottom.html(list_e);
+      bottom.append(bar_e);
+      container.html(subcontainer);
+      container.append(bottom);
       list_e.hide();
       bar_e.hide();
     } else {
       error_container.append(error_e);
-      container_e.html(error_container);
+      container.html(error_container);
     }
 
-    render_cb(container_e);
+    render_cb(container);
   }
 
   return module;
