@@ -36,12 +36,7 @@ var Webshark = (function () {
     var that = {};
 
     var container = null;
-    var supplier = $('<div id="content_supplier"></div>');
     var whireshark = $('<div id="whireshark_view">B</div>');
-
-    function renderHTML(container) {
-      supplier.html(container);
-    }
 
     function loadFile(content) {
       var xmlDoc = $.parseXML(content);
@@ -53,21 +48,11 @@ var Webshark = (function () {
 
     function packContainers(id) {
       container = $("#" + id);
-      container.html(supplier);
       container.append(whireshark);
     }
 
     if (obj.container)
       packContainers(obj.container);
-
-    if (obj.configure) {
-      obj.configure({
-        loadFile: loadFile
-      });
-    }
-
-    if (obj.render)
-      obj.render(renderHTML);
 
     return that;
   }

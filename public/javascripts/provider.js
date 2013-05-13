@@ -25,8 +25,10 @@ var DragAndDrop = (function () {
   var config = null;
 
   function refreshXML(content) {
+    /*
     if (config.loadFile)
       config.loadFile(content);
+    */
   }
 
   function addCSS() {
@@ -109,11 +111,7 @@ var DragAndDrop = (function () {
     };
   }
 
-  module.configure = function (obj) {
-    config = obj;
-  }
-
-  module.html = function (render_cb) {
+  module.html = function () {
     if(window.FileReader) {
       reader = new FileReader();
       addHandlers();
@@ -135,7 +133,7 @@ var DragAndDrop = (function () {
       container.html(error_container);
     }
 
-    render_cb(container);
+    return container;
   }
 
   return module;
