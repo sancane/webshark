@@ -110,7 +110,14 @@ var Webshark = {};
         if (obj.handler) {
           handler = new obj.handler();
           handler.init({
-            columns: ["No", "Time", "Source", "Destination", "Protocol", "Length", "Info"]
+            columns: ["No",
+              "Time",
+              "Source",
+              "Destination",
+              "Protocol",
+              "Length",
+              "Info"
+            ]
           });
           table_container.append(handler.render());
         }
