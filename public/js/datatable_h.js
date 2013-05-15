@@ -55,6 +55,9 @@ var DataTablesHandler = {};
       },
       render: function() {
         return container;
+      },
+      addRow: function(row) {
+        container.dataTable().fnAddData(row);
       }
     };
   })();
