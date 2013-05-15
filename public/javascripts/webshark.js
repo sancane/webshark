@@ -36,23 +36,40 @@ var Webshark = (function () {
     var that = {};
 
     var container = null;
-    var whireshark = $('<div id="whireshark_view">B</div>');
-
-    function loadFile(content) {
-      var xmlDoc = $.parseXML(content);
-       var $xml = $(xmlDoc);
-       $xml.find("proto").each(function() {
-         console.log($(this).attr("name"));
-       });
-    }
+    var handler = null;
+    var table_container = $('<div id="whireshark_table"></div>');
 
     function packContainers(id) {
       container = $("#" + id);
-      container.append(whireshark);
+      container.append(table_container);
     }
 
     if (obj.container)
       packContainers(obj.container);
+
+    if (obj.handler) {
+      handler = new obj.handler({
+        columns: ["No", "Time", "Source", "Destination", "Protocol", "Length", "Info"]
+      });
+      table_container.append(handler.render());
+    }
+
+    that.loadContent = function(content) {
+      try {
+        var xmlDoc = $.parseXML(content);
+        var $xml = $(xmlDoc);
+        console.log($xml.find("pdml").attr("version"));
+/*
+        $xml.find("proto").each(function() {
+          console.log($(this).attr("name"));
+        });
+*/
+        return true;
+      } catch (err) {
+        /* Error parsing xml */
+        return false;
+      }
+    }
 
     return that;
   }
