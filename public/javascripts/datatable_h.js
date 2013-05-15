@@ -15,6 +15,7 @@
  * DataTables Handler Module
  */
 var DataTablesHandler = {};
+
 (function () {
 
   /**
@@ -24,7 +25,7 @@ var DataTablesHandler = {};
   };
 
   // prototype assignment
-  DataTablesHandler.Table.prototype = (function(){
+  DataTablesHandler.Table.prototype = (function() {
 
     var container = $('<table id="datatables_id"></table>');
     var thead = $('<thead></thead>');
@@ -36,10 +37,6 @@ var DataTablesHandler = {};
     container.append(tbody);
 
     // private methods
-    function create_columns(columns) {
-      console.log("Soy un metodo privado llamado desde el constructor");
-    };
-
     function create_columns(columns) {
       var tr = $('<tr></tr>');
       thead.html(tr);
