@@ -24,11 +24,11 @@ var DragAndDrop = (function () {
   var fileName = null;
   var config = null;
 
-  var wireshark = null;
+  var load_f = null;
 
   function refreshXML(content) {
-    if (wireshark)
-      return wireshark.loadContent(content);
+    if (load_f)
+      return load_f(content);
     else
       return false;
   }
@@ -115,8 +115,8 @@ var DragAndDrop = (function () {
     };
   }
 
-  module.use = function(analizer) {
-    wireshark = analizer;
+  module.use = function(loadContent_f) {
+    load_f = loadContent_f;
   }
 
   module.html = function () {
