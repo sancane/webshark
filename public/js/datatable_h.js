@@ -26,6 +26,10 @@ var DataTablesHandler = {};
 
   // prototype assignment
   DataTablesHandler.Table.prototype = (function() {
+    // Table options
+    var options  = {
+      "bJQueryUI": true
+    };
 
     var container = $('<table id="datatables_id"></table>');
     var thead = $('<thead></thead>');
@@ -50,10 +54,16 @@ var DataTablesHandler = {};
       constructor: DataTablesHandler.Table,
 
       init: function(obj) {
+        if (obj.scrollable) {
+          options["sScrollY"] = "200px";
+          options["bPaginate"] = false;
+        }
+
         if (obj.columns)
           create_columns(obj.columns);
       },
       render: function() {
+        container.dataTable(options);
         return container;
       },
       addRow: function(row) {
