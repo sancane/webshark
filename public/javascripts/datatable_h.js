@@ -20,31 +20,46 @@ var DataTablesHandler = {};
   /**
    * This class manages Datatables library
    */
-  DataTablesHandler.Table = function (obj) {
-    this.container = $('<table id="datatables_id"></table>');
+  DataTablesHandler.Table = function () {
+  };
+
+  // prototype assignment
+  DataTablesHandler.Table.prototype = (function(){
+
+    var container = $('<table id="datatables_id"></table>');
     var thead = $('<thead></thead>');
-    var tr = $('<tr></tr>');
+    var tbody = $('<tbody></tbody>');
+
     var that = this;
 
-    this.container.html(thead);
-    thead.html(tr);
+    container.html(thead);
+    container.append(tbody);
 
+    // private methods
     function create_columns(columns) {
-
-      for(var i = 0; i < columns.length; i++) {
-        tr.append('<th>' + columns[i] + '</th>');
-        console.log("Append: " + columns[i]);
-      }
+      console.log("Soy un metodo privado llamado desde el constructor");
     };
 
-    if (obj.columns)
-      create_columns(obj.columns);
-  };
+    function create_columns(columns) {
+      var tr = $('<tr></tr>');
+      thead.html(tr);
 
-  DataTablesHandler.Table.prototype = {
-    render: function() {
-      return this.container;
-    }
-  };
+      for(var i = 0; i < columns.length; i++)
+        tr.append('<th>' + columns[i] + '</th>');
+    };
+
+    // prototype
+    return {
+      constructor: DataTablesHandler.Table,
+
+      init: function(obj) {
+        if (obj.columns)
+          create_columns(obj.columns);
+      },
+      render: function() {
+        return container;
+      }
+    };
+  })();
 
 })();
