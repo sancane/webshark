@@ -25,16 +25,18 @@
 /**
  * Webshark Module
  */
-var Webshark = (function () {
+var Webshark = {};
 
-  var module = {};
+(function () {
 
   /**
-   * Whireshark analyzer object
+   * Webshark Analyzer Class
    */
-  module.Analyzer = function(obj) {
-    var that = {};
+  Webshark.Analyzer = function () {
+  };
 
+  // prototype assignment
+  Webshark.Analyzer.prototype = (function(){
     var container = null;
     var handler = null;
     var table_container = $('<div id="whireshark_table"></div>');
@@ -44,37 +46,42 @@ var Webshark = (function () {
       container.append(table_container);
     }
 
-    if (obj.container)
-      packContainers(obj.container);
+    // prototype
+    return {
+      constructor: Webshark.Analyzer,
 
-    if (obj.handler) {
-      handler = new obj.handler();
-      handler.init({
-        columns: ["No", "Time", "Source", "Destination", "Protocol", "Length", "Info"]
-      });
-      table_container.append(handler.render());
-    }
+      init: function(obj) {
+        if (!obj)
+          return;
 
-    that.loadContent = function(content) {
-      try {
-        var xmlDoc = $.parseXML(content);
-        var $xml = $(xmlDoc);
-        console.log($xml.find("pdml").attr("version"));
-/*
-        $xml.find("proto").each(function() {
-          console.log($(this).attr("name"));
-        });
-*/
-        return true;
-      } catch (err) {
-        /* Error parsing xml */
-        return false;
+        if (obj.container)
+          packContainers(obj.container);
+
+        if (obj.handler) {
+          handler = new obj.handler();
+          handler.init({
+            columns: ["No", "Time", "Source", "Destination", "Protocol", "Length", "Info"]
+          });
+          table_container.append(handler.render());
+        }
+      },
+      loadContent: function(content) {
+        try {
+          var xmlDoc = $.parseXML(content);
+          var $xml = $(xmlDoc);
+          console.log($xml.find("pdml").attr("version"));
+
+          $xml.find("proto").each(function() {
+            console.log($(this).attr("name"));
+          });
+
+          return true;
+        } catch (err) {
+          // Error parsing xml
+          return false;
+        }
       }
-    }
+    };
+  })();
 
-    return that;
-  }
-
-  return module;
-
-}());
+})();

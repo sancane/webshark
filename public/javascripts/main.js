@@ -1,6 +1,7 @@
 $(window).load( function() {
+  var wireshark = new Webshark.Analyzer();
 
-  var wireshark = Webshark.Analyzer({
+  wireshark.init({
     container: "whireshark",
     handler: DataTablesHandler.Table
   });
