@@ -36,15 +36,65 @@ var Webshark = {};
   };
 
   // prototype assignment
-  Webshark.Analyzer.prototype = (function(){
+  Webshark.Analyzer.prototype = (function() {
+    var $xml = null; // Whireshark pdml document
+
     var container = null;
     var handler = null;
     var table_container = $('<div id="whireshark_table"></div>');
 
+    // Private functions
     function packContainers(id) {
       container = $("#" + id);
       container.append(table_container);
-    }
+    };
+
+    function parseIP(e, obj) {
+      e.find("field").each(function() {
+        if ($(this).attr("name") == "ip.src")
+          obj["source"] = $(this).attr("show");
+
+        if ($(this).attr("name") == "ip.dst")
+          obj["destination"] = $(this).attr("show");
+      });
+    };
+
+    function parseFrame(e, obj) {
+      e.find("field").each(function() {
+        if ($(this).attr("name") == "frame.time_relative")
+          obj["time"] = $(this).attr("show");
+
+        if ($(this).attr("name") == "frame.number")
+          obj["no"] = $(this).attr("show");
+
+        if ($(this).attr("name") == "frame.len")
+          obj["length"] = $(this).attr("show");
+      });
+    };
+
+    function parsePdml() {
+      $xml.find("packet").each(function() {
+        var row = {};
+
+        $(this).find("proto").each(function() {
+          if ($(this).attr("name") == "frame")
+            parseFrame($(this), row);
+
+          if ($(this).attr("name") == "ip")
+            parseIP($(this), row);
+        });
+
+        handler.addRow([
+          row["no"],
+          row["time"],
+          row["source"],
+          row["destination"],
+          "_",
+          row["length"],
+          "_"]
+        );
+      });
+    };
 
     // prototype
     return {
@@ -68,12 +118,14 @@ var Webshark = {};
       loadContent: function(content) {
         try {
           var xmlDoc = $.parseXML(content);
-          var $xml = $(xmlDoc);
-          console.log($xml.find("pdml").attr("version"));
+          $xml = $(xmlDoc);
 
-          $xml.find("proto").each(function() {
-            console.log($(this).attr("name"));
-          });
+          if ($xml.find("pdml").attr("version") != 0) {
+            console.log("Error. Uncompatible pdml version");
+            return false;
+          }
+
+          parsePdml();
 
           return true;
         } catch (err) {
