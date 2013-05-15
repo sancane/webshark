@@ -24,11 +24,13 @@ var DragAndDrop = (function () {
   var fileName = null;
   var config = null;
 
+  var wireshark = null;
+
   function refreshXML(content) {
-    /*
-    if (config.loadFile)
-      config.loadFile(content);
-    */
+    if (wireshark)
+      return wireshark.loadContent(content);
+    else
+      return false;
   }
 
   function addCSS() {
@@ -100,8 +102,10 @@ var DragAndDrop = (function () {
 
     reader.onload = function(e) {
       // Read was success
-      refreshXML(e.target.result);
-      list_e.html('<p class="success" >' + fileName + '</p');
+      if (refreshXML(e.target.result))
+        list_e.html('<p class="success" >' + fileName + '</p');
+      else
+        list_e.html('<p class="error">Error: ' + fileName + '</p');
     };
 
     reader.onloadend = function(e) {
@@ -109,6 +113,10 @@ var DragAndDrop = (function () {
         list_e.show();
       });
     };
+  }
+
+  module.use = function(analizer) {
+    wireshark = analizer;
   }
 
   module.html = function () {
