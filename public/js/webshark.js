@@ -217,6 +217,7 @@ var Webshark = {};
           return true;
         } catch (err) {
           // Error parsing xml
+          console.log(err);
           return false;
         }
       }
