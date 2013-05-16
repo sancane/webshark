@@ -63,11 +63,50 @@ var Webshark = {};
                 break;
               obj["protocol"] = vSSL($(this).attr("show"));
             };
-
-            console.log($(this).attr("name"));
           });
         }
       });
+    };
+
+    function addInfo(obj, info) {
+      if (!obj["info"])
+        obj["info"] = info;
+      else
+        obj["info"] += ", " + info;
+    };
+
+    function contenTypeSSL(type) {
+      switch(type) {
+      case "20":
+        return "Change Cipher Spec";
+      case "21":
+        return "Alert";
+      case "22":
+        return "Handshake";
+      case "23":
+        return "Application Data";
+      default:
+        return "Unknown";
+      }
+    }
+
+    function parseSSLInfo(e, obj) {
+      e.children("field").each(function() {
+        if ($(this).attr("name") == "ssl.record") {
+          $(this).children("field").each(function() {
+            if ($(this).attr("name") == "ssl.record.content_type")
+              addInfo(obj, contenTypeSSL($(this).attr("show")));
+          });
+        }
+      });
+    };
+
+    function parseInfo(e, obj) {
+      switch (e.attr("name")) {
+      case "ssl":
+        parseSSLInfo(e, obj);
+        break;
+      };
     };
 
     function parseProtocol(e, obj) {
@@ -121,8 +160,10 @@ var Webshark = {};
           if ($(this).attr("name") == "ip")
             parseIP($(this), row);
 
-          if (index == proto.length - 1)
+          if (index == proto.length - 1) {
             parseProtocol($(this), row);
+            parseInfo($(this), row);
+          }
         });
 
         handler.addRow([
@@ -132,8 +173,8 @@ var Webshark = {};
           row["destination"],
           row["protocol"],
           row["length"],
-          "_"]
-        );
+          (row["info"]) ? row["info"] : ""
+        ]);
       });
     };
 
