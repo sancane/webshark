@@ -57,12 +57,9 @@ var Webshark = {};
       e.children("field").each(function() {
         if ($(this).attr("name") == "ssl.record") {
           $(this).children("field").each(function() {
-            switch($(this).attr("name")) {
-            case "ssl.record.version":
-              if (obj["protocol"])
-                break;
+            if ($(this).attr("name") == "ssl.record.version"
+                                                            && !obj["protocol"])
               obj["protocol"] = vSSL($(this).attr("show"));
-            };
           });
         }
       });
