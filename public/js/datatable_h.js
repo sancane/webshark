@@ -57,9 +57,10 @@ var DataTablesHandler = {};
       constructor: DataTablesHandler.Table,
 
       init: function(obj) {
-        if (obj.scrollable) {
+        if (obj.scrollableY) {
           options["sScrollY"] = "200px";
           options["bPaginate"] = false;
+          options["bScrollCollapse"] = true;
         }
 
         if (obj.columns)
