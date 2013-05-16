@@ -50,7 +50,7 @@ var Webshark = {};
     };
 
     function parseIP(e, obj) {
-      e.find("field").each(function() {
+      e.children("field").each(function() {
         if ($(this).attr("name") == "ip.src")
           obj["source"] = $(this).attr("show");
 
@@ -60,7 +60,7 @@ var Webshark = {};
     };
 
     function parseFrame(e, obj) {
-      e.find("field").each(function() {
+      e.children("field").each(function() {
         if ($(this).attr("name") == "frame.time_relative")
           obj["time"] = $(this).attr("show");
 
@@ -72,11 +72,12 @@ var Webshark = {};
       });
     };
 
-    function parsePdml() {
-      $xml.find("packet").each(function() {
+    function parseTags(pdml) {
+      pdml.children("packet").each(function() {
         var row = {};
+        var proto = $(this).children("proto");
 
-        $(this).find("proto").each(function() {
+        proto.each(function(index) {
           if ($(this).attr("name") == "frame")
             parseFrame($(this), row);
 
@@ -126,13 +127,14 @@ var Webshark = {};
         try {
           var xmlDoc = $.parseXML(content);
           $xml = $(xmlDoc);
+          var pdml = $xml.children("pdml");
 
-          if ($xml.find("pdml").attr("version") != 0) {
+          if (pdml.attr("version") != 0) {
             console.log("Error. Uncompatible pdml version");
             return false;
           }
 
-          parsePdml();
+          parseTags(pdml);
 
           return true;
         } catch (err) {
