@@ -65,11 +65,16 @@ var Webshark = {};
       });
     };
 
-    function addInfo(obj, info) {
+    function addInfo(obj, info, separator, first) {
       if (!obj["info"])
         obj["info"] = info;
+      else if (arguments.length > 3)
+        if (first)
+          obj["info"] = info + separator + obj["info"];
+        else
+          obj["info"] += separator + info;
       else
-        obj["info"] += ", " + info;
+        obj["info"] += separator + info;
     };
 
     function contenTypeSSL(type) {
@@ -92,16 +97,32 @@ var Webshark = {};
         if ($(this).attr("name") == "ssl.record") {
           $(this).children("field").each(function() {
             if ($(this).attr("name") == "ssl.record.content_type")
-              addInfo(obj, contenTypeSSL($(this).attr("show")));
+              addInfo(obj, contenTypeSSL($(this).attr("show")), ", ");
           });
         }
       });
     };
 
-    function parseInfo(e, obj) {
+    function parseIGMPInfo(e, obj) {
+      e.children("field").each(function() {
+        switch ($(this).attr("name")) {
+        case "igmp.version":
+          addInfo(obj, $(this).attr("showname"), ", ", true);
+          break;
+        case "igmp.type":
+          addInfo(obj, $(this).attr("showname"), ", ");
+          break;
+        };
+      });
+    };
+
+    function parseInfo(e, obj) {;
       switch (e.attr("name")) {
       case "ssl":
         parseSSLInfo(e, obj);
+        break;
+      case "igmp":
+        parseIGMPInfo(e, obj);
         break;
       };
     };
