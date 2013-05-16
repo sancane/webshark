@@ -31,14 +31,17 @@ var DataTablesHandler = {};
       "bJQueryUI": true
     };
 
-    var container = $('<table id="datatables_id"></table>');
+    var container = $('<div></div>');
+
+    var table = $('<table id="datatables_id" cellpadding="0" cellspacing="0" border="0" class="display"></table>');
     var thead = $('<thead></thead>');
     var tbody = $('<tbody></tbody>');
 
     var that = this;
 
-    container.html(thead);
-    container.append(tbody);
+    container.html(table);
+    table.html(thead);
+    table.append(tbody);
 
     // private methods
     function create_columns(columns) {
@@ -63,11 +66,11 @@ var DataTablesHandler = {};
           create_columns(obj.columns);
       },
       render: function() {
-        container.dataTable(options);
+        table.dataTable(options);
         return container;
       },
       addRow: function(row) {
-        container.dataTable().fnAddData(row);
+        table.dataTable().fnAddData(row);
       }
     };
   })();
