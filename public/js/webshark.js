@@ -77,27 +77,12 @@ var Webshark = {};
         obj["info"] += separator + info;
     };
 
-    function contenTypeSSL(type) {
-      switch(type) {
-      case "20":
-        return "Change Cipher Spec";
-      case "21":
-        return "Alert";
-      case "22":
-        return "Handshake";
-      case "23":
-        return "Application Data";
-      default:
-        return "Unknown";
-      }
-    }
-
     function parseSSLInfo(e, obj) {
       e.children("field").each(function() {
         if ($(this).attr("name") == "ssl.record") {
           $(this).children("field").each(function() {
             if ($(this).attr("name") == "ssl.record.content_type")
-              addInfo(obj, contenTypeSSL($(this).attr("show")), ", ");
+              addInfo(obj, $(this).attr("showname"), ", ");
           });
         }
       });
