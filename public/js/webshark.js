@@ -197,6 +197,7 @@ var Webshark = {};
         if (obj.handler) {
           handler = new obj.handler();
           handler.init({
+            scrollableX: true,
             scrollableY: true,
             columns: ["No",
               "Time",

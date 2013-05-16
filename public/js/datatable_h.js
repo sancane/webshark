@@ -63,6 +63,11 @@ var DataTablesHandler = {};
           options["bScrollCollapse"] = true;
         }
 
+        if (obj.scrollableX) {
+          options["sScrollX"] = "100%";
+          options["sScrollXInner"] = "110%";
+        }
+
         if (obj.columns)
           create_columns(obj.columns);
       },
