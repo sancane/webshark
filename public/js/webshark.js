@@ -109,6 +109,8 @@ var Webshark = {};
       case "igmp":
         parseIGMPInfo(e, obj);
         break;
+      default:
+        obj["info"] = e.attr("showname");
       };
     };
 
