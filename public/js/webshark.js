@@ -44,6 +44,43 @@ var Webshark = {};
     var table_container = $('<div id="whireshark_table"></div>');
 
     // Private functions
+    function vSSL(version) {
+      if (version == "0x0301")
+        return "TLSv1";
+      else if (version == "0x0300")
+        return "SSLv3";
+      else
+        return "SSL(" + version +")";
+    };
+
+    function parseSSLProtocol(e, obj) {
+      e.children("field").each(function() {
+        if ($(this).attr("name") == "ssl.record") {
+          $(this).children("field").each(function() {
+            switch($(this).attr("name")) {
+            case "ssl.record.version":
+              if (obj["protocol"])
+                break;
+              obj["protocol"] = vSSL($(this).attr("show"));
+            };
+
+            console.log($(this).attr("name"));
+          });
+        }
+      });
+    };
+
+    function parseProtocol(e, obj) {
+      switch (e.attr("name")) {
+      case "ssl":
+        parseSSLProtocol(e, obj);
+        break;
+      default:
+        obj["protocol"] = e.attr("name").toUpperCase();
+      };
+
+    };
+
     function packContainers(id) {
       container = $("#" + id);
       container.append(table_container);
@@ -83,6 +120,9 @@ var Webshark = {};
 
           if ($(this).attr("name") == "ip")
             parseIP($(this), row);
+
+          if (index == proto.length - 1)
+            parseProtocol($(this), row);
         });
 
         handler.addRow([
@@ -90,7 +130,7 @@ var Webshark = {};
           row["time"],
           row["source"],
           row["destination"],
-          "_",
+          row["protocol"],
           row["length"],
           "_"]
         );
