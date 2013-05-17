@@ -185,16 +185,6 @@ var Webshark = {};
       container.append(table_container);
     };
 
-    function parseIP(e, obj) {
-      e.children("field").each(function() {
-        if ($(this).attr("name") == "ip.src")
-          obj["source"] = $(this).attr("show");
-
-        if ($(this).attr("name") == "ip.dst")
-          obj["destination"] = $(this).attr("show");
-      });
-    };
-
     function parseFrame(e, obj) {
       e.children("field").each(function() {
         if ($(this).attr("name") == "frame.time_relative")
@@ -314,4 +304,34 @@ var Webshark = {};
     };
   })();
 
+  /****************************************************************************
+   * Handler objects go here
+   ****************************************************************************/
+
+  var IPHandler = function () {
+    ProtocolHandler.call(this, "ip");
+  };
+
+  extend(IPHandler, ProtocolHandler);
+
+  // extend prototype and return them
+  IPHandler.prototype = (function(proto) {
+
+    // Public methods
+    proto.handle = function(proto, raw) {
+      proto.children("field").each(function() {
+        if ($(this).attr("name") == "ip.src")
+          raw["source"] = $(this).attr("show");
+
+        if ($(this).attr("name") == "ip.dst")
+          raw["destination"] = $(this).attr("show");
+      });
+    };
+
+    return proto;
+  })(IPHandler.prototype);
+
+
+  // Add protocol handlers
+  extractor.addHandler(new IPHandler());
 })();
