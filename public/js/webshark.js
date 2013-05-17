@@ -202,7 +202,7 @@ var Webshark = {};
       var row = {};
 
       packet.children("proto").each(function () {
-        extractor.getInfo($(this).attr("name"), row);
+        extractor.getInfo($(this).attr("name"), $(this), row);
       });
 
       return row;
