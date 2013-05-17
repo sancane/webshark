@@ -109,6 +109,7 @@ var Webshark = {};
     var container = null;
     var handler = null;
     var table_container = $('<div id="whireshark_table"></div>');
+    var packet_container = $('<div id="wireshark_package"></div>');
 
     // Private functions
 /*
@@ -158,7 +159,8 @@ var Webshark = {};
 */
     function packContainers(id) {
       container = $("#" + id);
-      container.append(table_container);
+      container.html(table_container);
+      container.append(packet_container);
     };
 
     function parsePacket(packet) {
