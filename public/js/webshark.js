@@ -51,6 +51,9 @@ var Webshark = {};
     return {
       constructor: ProtocolHandler,
 
+      getProtocol: function() {
+        return this.proto.toUpperCase();
+      },
       // Fill table raw identified by rawObj with the information extracted from
       // xml tag proto which is contained in the pdml file
       handle: function(proto, rawObj) {}
@@ -342,6 +345,7 @@ var Webshark = {};
   Eth.prototype = (function(proto) {
     proto.handle = function(proto, raw) {
       raw["info"] = proto.attr("showname");
+      raw["protocol"] = this.getProtocol();
 
       proto.children("field").each(function() {
         if ($(this).attr("name") == "eth.src")
@@ -364,6 +368,8 @@ var Webshark = {};
 
   IPHandler.prototype = (function(proto) {
     proto.handle = function(proto, raw) {
+      var protocol = this.getProtocol();
+
       proto.children("field").each(function() {
         if ($(this).attr("name") == "ip.src")
           raw["source"] = $(this).attr("show");
@@ -372,7 +378,7 @@ var Webshark = {};
           raw["destination"] = $(this).attr("show");
 
         if ($(this).attr("name") == "ip.version")
-          raw["protocol"] = "IPv" + $(this).attr("show");
+          raw["protocol"] = protocol + "v" + $(this).attr("show");
       });
     };
 
