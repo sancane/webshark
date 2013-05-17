@@ -308,16 +308,38 @@ var Webshark = {};
    * Handler objects go here
    ****************************************************************************/
 
+  var FrameHandler = function () {
+    ProtocolHandler.call(this, "frame");
+  };
+
+  extend(FrameHandler, ProtocolHandler);
+
+  // Frame Handler
+  FrameHandler.prototype = (function(proto) {
+    proto.handle = function(proto, raw) {
+      proto.children("field").each(function() {
+        if ($(this).attr("name") == "frame.time_relative")
+          raw["time"] = $(this).attr("show");
+
+        if ($(this).attr("name") == "frame.number")
+          raw["no"] = $(this).attr("show");
+
+        if ($(this).attr("name") == "frame.len")
+          raw["length"] = $(this).attr("show");
+      });
+    };
+
+    return proto;
+  })(FrameHandler.prototype);
+
+  // IP Handler
   var IPHandler = function () {
     ProtocolHandler.call(this, "ip");
   };
 
   extend(IPHandler, ProtocolHandler);
 
-  // extend prototype and return them
   IPHandler.prototype = (function(proto) {
-
-    // Public methods
     proto.handle = function(proto, raw) {
       proto.children("field").each(function() {
         if ($(this).attr("name") == "ip.src")
@@ -331,7 +353,7 @@ var Webshark = {};
     return proto;
   })(IPHandler.prototype);
 
-
   // Add protocol handlers
+  extractor.addHandler(new FrameHandler());
   extractor.addHandler(new IPHandler());
 })();
