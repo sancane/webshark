@@ -111,6 +111,7 @@ var Webshark = {};
     var table_container = $('<div id="whireshark_table"></div>');
 
     // Private functions
+/*
     function vSSL(version) {
       if (version == "0x0301")
         return "TLSv1";
@@ -154,60 +155,10 @@ var Webshark = {};
         }
       });
     };
-
-    function parseIGMPInfo(e, obj) {
-      e.children("field").each(function() {
-        switch ($(this).attr("name")) {
-        case "igmp.version":
-          addInfo(obj, $(this).attr("showname"), ", ", true);
-          break;
-        case "igmp.type":
-          addInfo(obj, $(this).attr("showname"), ", ");
-          break;
-        };
-      });
-    };
-
-    function parseInfo(e, obj) {;
-      switch (e.attr("name")) {
-      case "ssl":
-        parseSSLInfo(e, obj);
-        break;
-      case "igmp":
-        parseIGMPInfo(e, obj);
-        break;
-      default:
-        obj["info"] = e.attr("showname");
-      };
-    };
-
-    function parseProtocol(e, obj) {
-      switch (e.attr("name")) {
-      case "ssl":
-        parseSSLProtocol(e, obj);
-        break;
-      default:
-        obj["protocol"] = e.attr("name").toUpperCase();
-      };
-
-    };
-
+*/
     function packContainers(id) {
       container = $("#" + id);
       container.append(table_container);
-    };
-
-    function parseFrame(e, obj) {
-      e.children("field").each(function() {
-        if ($(this).attr("name") == "frame.time_relative")
-          obj["time"] = $(this).attr("show");
-
-        if ($(this).attr("name") == "frame.number")
-          obj["no"] = $(this).attr("show");
-
-        if ($(this).attr("name") == "frame.len")
-          obj["length"] = $(this).attr("show");
-      });
     };
 
     function parsePacket(packet) {
@@ -234,37 +185,7 @@ var Webshark = {};
         ]);
       });
     };
-/*
-    function parseTags(pdml) {
-      pdml.children("packet").each(function() {
-        var row = {};
-        var proto = $(this).children("proto");
 
-        proto.each(function(index) {
-          if ($(this).attr("name") == "frame")
-            parseFrame($(this), row);
-
-          if ($(this).attr("name") == "ip")
-            parseIP($(this), row);
-
-          if (index == proto.length - 1) {
-            parseProtocol($(this), row);
-            parseInfo($(this), row);
-          }
-        });
-
-        handler.addRow([
-          row["no"],
-          row["time"],
-          row["source"],
-          row["destination"],
-          row["protocol"],
-          row["length"],
-          (row["info"]) ? row["info"] : ""
-        ]);
-      });
-    };
-*/
     // prototype
     return {
       constructor: Webshark.Analyzer,
