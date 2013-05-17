@@ -86,7 +86,8 @@ var Webshark = {};
         }
 
         // Try to get info if it is possible
-        if (proto.attr("name") && proto.attr("showname")) {
+        if (proto.attr("name").toUpperCase() != "MALFORMED" &&
+                                                       proto.attr("showname")) {
           raw["info"] = proto.attr("showname");
           raw["protocol"] = proto.attr("name").toUpperCase();
         }
