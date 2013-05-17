@@ -347,6 +347,9 @@ var Webshark = {};
 
         if ($(this).attr("name") == "ip.dst")
           raw["destination"] = $(this).attr("show");
+
+        if ($(this).attr("name") == "ip.version")
+          raw["protocol"] = "IPv" + $(this).attr("show");
       });
     };
 
