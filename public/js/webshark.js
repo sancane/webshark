@@ -308,13 +308,13 @@ var Webshark = {};
    * Handler objects go here
    ****************************************************************************/
 
+  // Frame Handler
   var FrameHandler = function () {
     ProtocolHandler.call(this, "frame");
   };
 
   extend(FrameHandler, ProtocolHandler);
 
-  // Frame Handler
   FrameHandler.prototype = (function(proto) {
     proto.handle = function(proto, raw) {
       proto.children("field").each(function() {
@@ -331,6 +331,29 @@ var Webshark = {};
 
     return proto;
   })(FrameHandler.prototype);
+
+  // Eth Handler
+  var Eth = function () {
+    ProtocolHandler.call(this, "eth");
+  };
+
+  extend(Eth, ProtocolHandler);
+
+  Eth.prototype = (function(proto) {
+    proto.handle = function(proto, raw) {
+      raw["info"] = proto.attr("showname");
+
+      proto.children("field").each(function() {
+        if ($(this).attr("name") == "eth.src")
+          raw["source"] = $(this).attr("show");
+
+        if ($(this).attr("name") == "eth.dst")
+          raw["destination"] = $(this).attr("show");
+      });
+    };
+
+    return proto;
+  })(Eth.prototype);
 
   // IP Handler
   var IPHandler = function () {
@@ -358,5 +381,6 @@ var Webshark = {};
 
   // Add protocol handlers
   extractor.addHandler(new FrameHandler());
+  extractor.addHandler(new Eth());
   extractor.addHandler(new IPHandler());
 })();
