@@ -367,22 +367,6 @@ var Webshark = {};
     return proto;
   })(Eth.prototype);
 
-  // ARP Handler
-  var ARP = function () {
-    ProtocolHandler.call(this, "arp");
-  };
-
-  extend(ARP, ProtocolHandler);
-
-  ARP.prototype = (function(proto) {
-    proto.handle = function(proto, raw) {
-      raw["info"] = proto.attr("showname");
-      raw["protocol"] = this.getProtocol();
-    };
-
-    return proto;
-  })(ARP.prototype);
-
   // IP Handler
   var IPHandler = function () {
     ProtocolHandler.call(this, "ip");
@@ -412,6 +396,5 @@ var Webshark = {};
   // Add protocol handlers
   extractor.addHandler(new FrameHandler());
   extractor.addHandler(new Eth());
-  extractor.addHandler(new ARP());
   extractor.addHandler(new IPHandler());
 })();
