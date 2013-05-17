@@ -30,10 +30,37 @@ var Webshark = {};
 (function () {
 
   /**
+   * Class which extracts row information
+   */
+  var DataExtractor = function () {};
+
+  // prototype assignment
+  DataExtractor.prototype = (function() {
+    var extractors = {};
+
+    // prototype
+    return {
+      constructor: DataExtractor,
+
+      addHandler: function(name, handler) {
+        if (extractors.name)
+          console.log("Overwrite extractor for proto: " + name);
+
+        extractors[name] = handler;
+      },
+      getInfo: function(name, proto, rawObj) {
+        if (extractors.name)
+          extractors.name(proto, rawObj);
+      }
+    }
+  })();
+
+  var extractor = new DataExtractor();
+
+  /**
    * Webshark Analyzer Class
    */
-  Webshark.Analyzer = function () {
-  };
+  Webshark.Analyzer = function () {};
 
   // prototype assignment
   Webshark.Analyzer.prototype = (function() {
@@ -153,6 +180,31 @@ var Webshark = {};
       });
     };
 
+    function parsePacket(packet) {
+      var row = {};
+
+      packet.children("proto").each(function () {
+        extractor.getInfo($(this).attr("name"), row);
+      });
+
+      return row;
+    };
+
+    function parseTags(pdml) {
+      pdml.children("packet").each(function() {
+        var row = parsePacket($(this));
+        handler.addRow([
+          (row["no"]) ? row["no"] : "",
+          (row["time"]) ? row["time"] : "",
+          (row["source"]) ? row["source"] : "",
+          (row["destination"]) ? row["destination"] : "",
+          (row["protocol"]) ? row["protocol"] : "",
+          (row["length"]) ? row["length"] : "",
+          (row["info"]) ? row["info"] : ""
+        ]);
+      });
+    };
+/*
     function parseTags(pdml) {
       pdml.children("packet").each(function() {
         var row = {};
@@ -182,7 +234,7 @@ var Webshark = {};
         ]);
       });
     };
-
+*/
     // prototype
     return {
       constructor: Webshark.Analyzer,
