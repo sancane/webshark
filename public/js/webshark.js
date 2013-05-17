@@ -30,6 +30,25 @@ var Webshark = {};
 (function () {
 
   /**
+   * Generic extractor handler class
+   */
+  var ProtocolHandler = function (protocol) {
+    this.proto = protocol;
+  };
+
+  // prototype assignment
+  ProtocolHandler.prototype = (function() {
+    // prototype
+    return {
+      constructor: ProtocolHandler,
+
+      // Fill table raw identifies by rawObj with the information extracted from
+      // xml tag proto contained in pdml file
+      handle: function(proto, rawObj) {}
+    };
+  })();
+
+  /**
    * Class which extracts row information
    */
   var DataExtractor = function () {};
@@ -42,17 +61,17 @@ var Webshark = {};
     return {
       constructor: DataExtractor,
 
-      addHandler: function(name, handler) {
-        if (extractors.name)
-          console.log("Overwrite extractor for proto: " + name);
+      addHandler: function(handler) {
+        if (extractors[handler.proto])
+          console.log("Overwriting handler for proto: " + handler.proto);
 
-        extractors[name] = handler;
+        extractors[handler.proto] = handler;
       },
       getInfo: function(name, proto, rawObj) {
-        if (extractors.name)
-          extractors.name(proto, rawObj);
+        if (extractors[name])
+          extractors[name].handle(proto, rawObj);
       }
-    }
+    };
   })();
 
   var extractor = new DataExtractor();
