@@ -29,10 +29,19 @@ var Webshark = {};
 
 (function () {
 
-  /**
+  // basic extend function
+  function extend(B, A){
+    function I(){};
+    I.prototype = A.prototype;
+    B.prototype = new I;
+    B.prototype.constructor = B;
+    B.prototype.parent = A;
+  };
+
+  /**********************************
    * Generic extractor handler class
-   */
-  var ProtocolHandler = function (protocol) {
+   **********************************/
+  var ProtocolHandler = function(protocol) {
     this.proto = protocol;
   };
 
@@ -42,15 +51,15 @@ var Webshark = {};
     return {
       constructor: ProtocolHandler,
 
-      // Fill table raw identifies by rawObj with the information extracted from
-      // xml tag proto contained in pdml file
+      // Fill table raw identified by rawObj with the information extracted from
+      // xml tag proto which is contained in the pdml file
       handle: function(proto, rawObj) {}
     };
   })();
 
-  /**
+  /***************************************
    * Class which extracts row information
-   */
+   ***************************************/
   var DataExtractor = function () {};
 
   // prototype assignment
@@ -76,9 +85,9 @@ var Webshark = {};
 
   var extractor = new DataExtractor();
 
-  /**
+  /**************************
    * Webshark Analyzer Class
-   */
+   **************************/
   Webshark.Analyzer = function () {};
 
   // prototype assignment
