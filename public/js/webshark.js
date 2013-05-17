@@ -79,9 +79,17 @@ var Webshark = {};
 
         extractors[handler.proto] = handler;
       },
-      getInfo: function(name, proto, rawObj) {
-        if (extractors[name])
-          extractors[name].handle(proto, rawObj);
+      getInfo: function(name, proto, raw) {
+        if (extractors[name]) {
+          extractors[name].handle(proto, raw);
+          return;
+        }
+
+        // Try to get info if it is possible
+        if (proto.attr("name") && proto.attr("showname")) {
+          raw["info"] = proto.attr("showname");
+          raw["protocol"] = proto.attr("name").toUpperCase();
+        }
       }
     };
   })();
