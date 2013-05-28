@@ -29,6 +29,8 @@ var Webshark = {};
 
 (function () {
 
+  var PACKETS_BUNCHED = 500;
+
   // basic extend function
   function extend(B, A){
     function I(){};
@@ -174,18 +176,32 @@ var Webshark = {};
     };
 
     function parseTags(pdml) {
-      pdml.children("packet").each(function() {
-        var row = parsePacket($(this));
-        handler.addRow([
-          (row["no"]) ? row["no"] : "",
-          (row["time"]) ? row["time"] : "",
-          (row["source"]) ? row["source"] : "",
-          (row["destination"]) ? row["destination"] : "",
-          (row["protocol"]) ? row["protocol"] : "",
-          (row["length"]) ? row["length"] : "",
-          (row["info"]) ? row["info"] : ""
-        ]);
+      var packets = pdml.children("packet");
+      var size = packets.length;
+      var rows = [];
+
+      packets.each(function(index) {
+        var obj = parsePacket($(this));
+        var row = [
+          (obj["no"]) ? obj["no"] : "",
+          (obj["time"]) ? obj["time"] : "",
+          (obj["source"]) ? obj["source"] : "",
+          (obj["destination"]) ? obj["destination"] : "",
+          (obj["protocol"]) ? obj["protocol"] : "",
+          (obj["length"]) ? obj["length"] : "",
+          (obj["info"]) ? obj["info"] : ""
+        ];
+
+        rows.push(row);
+
+        if (index + 1 % PACKETS_BUNCHED == 0) {
+          handler.addRow(rows, true);
+          rows = [];
+        }
       });
+
+      if (rows.length > 0)
+        handler.addRows(rows, true);
     };
 
     // prototype

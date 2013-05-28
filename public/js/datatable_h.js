@@ -75,8 +75,8 @@ var DataTablesHandler = {};
         table.dataTable(options);
         return container;
       },
-      addRow: function(row) {
-        table.dataTable().fnAddData(row);
+      addRows: function(rows, redraw) {
+        table.dataTable().fnAddData(rows, redraw);
       }
     };
   })();
